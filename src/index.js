@@ -79,7 +79,7 @@ function mnemonicToEntropy(mnemonic, wordlist) {
     const checksumBits = bits.slice(dividerIndex);
     // calculate the checksum and compare
     const entropyBytes = entropyBits.match(/(.{1,8})/g).map(binaryToByte);
-    if (entropyBytes.length < 16) {
+    if (entropyBytes.length < 12) {
         throw new Error(INVALID_ENTROPY);
     }
     if (entropyBytes.length > 32) {
@@ -104,8 +104,8 @@ function entropyToMnemonic(entropy, wordlist) {
     if (!wordlist) {
         throw new Error(WORDLIST_REQUIRED);
     }
-    // 128 <= ENT <= 256
-    if (entropy.length < 16) {
+    // 96 <= ENT <= 256
+    if (entropy.length < 12) {
         throw new TypeError(INVALID_ENTROPY);
     }
     if (entropy.length > 32) {
